@@ -10,18 +10,16 @@ import {
 } from 'react-native';
 import { AppContext } from '../context/AppContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
-// import back-button.png from '../assets/back-button.png';
+
 import { t } from '../utils/i18n';
 import { useNavigation } from '@react-navigation/native';
-// import { Image } from 'react-native/types_generated/index';
 
 export default function CartScreen() {
   const { state, dispatch } = useContext(AppContext);
-  //   const [isrtl, setIsrtl] = React.useState(I18nManager.isRTL);
-  const cartItems = state.cart;
-  const language = state.language;
+  const cartItems = state.cart || [];
+  const language = state.language || 'en';
   const navigation = useNavigation();
-  console.log('CartScreen Rendered', { cartItems, language });
+  // console.log('CartScreen Rendered', { cartItems, language });
 
   const handleDelete = id => {
     dispatch({ type: 'REMOVE_FROM_CART', payload: id });
@@ -31,26 +29,25 @@ export default function CartScreen() {
     <View
       style={[
         styles.itemRow,
-        {
-          flexDirection: language === 'ar' ? 'row-reverse' : 'row',
-        },
+        { flexDirection: language === 'ar' ? 'row-reverse' : 'row' },
       ]}
     >
-      <Text
-        style={[
-          styles.title,
-          {
-            marginRight: language === 'ar' ? 0 : 180,
-            marginLeft: language === 'ar' ? 180 : 0,
-          },
-        ]}
-      >
-        {item.title}
-      </Text>
+      <View style={styles.itemLeft}>
+        <Text
+          style={[
+            styles.title,
+            { textAlign: language === 'ar' ? 'right' : 'left' },
+          ]}
+        >
+          {item.title}
+        </Text>
+      </View>
+
       <TouchableOpacity
         testID={`cart_item_delete_${index + 1}`}
         onPress={() => handleDelete(item.id)}
         style={styles.deleteBtn}
+        accessibilityLabel={`cart_item_delete_${index + 1}`}
       >
         <Text style={styles.deleteText}>🗑️ {t(language, 'delete')}</Text>
       </TouchableOpacity>
@@ -59,7 +56,6 @@ export default function CartScreen() {
 
   return (
     <SafeAreaView style={styles.safe} testID="cart_screen">
-      {/* Header with Back Button */}
       <View
         style={[
           styles.header,
@@ -69,27 +65,32 @@ export default function CartScreen() {
         <TouchableOpacity
           testID="back_button"
           onPress={() => navigation.goBack()}
-          style={[styles.backBtn, language === 'ar' && styles.backBtnRTL]}
+          style={[styles.backBtn]}
         >
           <Image
             style={{ width: 24, height: 24 }}
             source={require('../assets/back-button.png')}
+            resizeMode="contain"
           />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>{t(language, 'cart')}</Text>
-        <View style={{ width: 40 }} /> {/* Spacer for symmetry */}
+
+        <Text style={styles.headerTitle} accessibilityRole="header">
+          {t(language, 'cart')}
+        </Text>
+
+        <View style={{ width: 40 }} />
       </View>
 
-      {/* Cart Items */}
       <View style={styles.container}>
         {cartItems.length === 0 ? (
           <Text style={styles.emptyText}>{t(language, 'emptyCart')}</Text>
         ) : (
           <FlatList
             data={cartItems}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.id.toString()}
             renderItem={renderItem}
             contentContainerStyle={styles.list}
+            showsVerticalScrollIndicator={false}
           />
         )}
       </View>
@@ -111,22 +112,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6,
   },
-  backBtnRTL: {
-    transform: [{ rotateY: '180deg' }],
-  },
-  backText: {
-    fontSize: 18,
-  },
   headerTitle: {
     fontSize: 20,
     fontWeight: '600',
     textAlign: 'center',
     flex: 1,
+    color: '#111',
   },
   container: { flex: 1 },
-  list: { padding: 16 },
+  list: { padding: 16, paddingBottom: 32 },
   itemRow: {
-    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 12,
@@ -135,11 +130,17 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     borderRadius: 8,
     backgroundColor: '#f9f9f9',
+    flexDirection: 'row',
   },
-  title: { fontSize: 16, flex: 1, marginRight: 180 },
+  itemLeft: {
+    flex: 1,
+    paddingRight: 8,
+    paddingLeft: 8,
+  },
+  title: { fontSize: 16, color: '#111' },
   deleteBtn: {
     backgroundColor: '#dc3545',
-    paddingVertical: 6,
+    paddingVertical: 8,
     paddingHorizontal: 10,
     borderRadius: 6,
   },

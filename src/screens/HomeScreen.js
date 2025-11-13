@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppContext } from '../context/AppContext';
 import ProductCard from '../components/ProductCard';
 
-// 20 static products
+//  20 static products
 const BASE_PRODUCTS = Array.from({ length: 20 }).map((_, i) => ({
   id: `prod-${i + 1}`,
   title: `Product ${i + 1}`,
@@ -39,6 +39,8 @@ export default function HomeScreen() {
   );
 
   const keyExtractor = useMemo(() => item => item.id, []);
+
+  console.log('HomeScreen Rendered', { cartItems, language });
 
   return (
     <SafeAreaView style={styles.safe} testID="home_screen">

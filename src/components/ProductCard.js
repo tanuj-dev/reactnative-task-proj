@@ -28,7 +28,7 @@ export default function ProductCard({ item, index }) {
       <TouchableOpacity
         testID={`product_${index + 1}_add_button`}
         onPress={handleToggle}
-        disabled={!isAllowed} // disable button for non-4th items
+        disabled={!isAllowed}
         style={[
           styles.button,
           isAdded && styles.added,
@@ -41,7 +41,6 @@ export default function ProductCard({ item, index }) {
             : isAllowed
             ? t(state.language, 'add')
             : t(state.language, 'add')}{' '}
-          {/* still shows "Add" but disabled */}
         </Text>
       </TouchableOpacity>
     </View>

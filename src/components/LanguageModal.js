@@ -7,7 +7,7 @@ import {
   StyleSheet,
   I18nManager,
 } from 'react-native';
-import RNRestart from 'react-native-restart'; // 👈 install this package
+
 import { AppContext } from '../context/AppContext';
 import { t } from '../utils/i18n';
 
@@ -16,13 +16,6 @@ export default function LanguageModal({ visible, onClose }) {
 
   const handleLanguageChange = lang => {
     dispatch({ type: 'SET_LANGUAGE', payload: lang });
-
-    // const isRTL = lang === 'ar';
-    // if (I18nManager.isRTL !== isRTL) {
-    //   I18nManager.allowRTL(true);
-    //   I18nManager.forceRTL(isRTL);
-    //   RNRestart.Restart(); // 👈 triggers full app reload
-    // }
 
     onClose();
   };
