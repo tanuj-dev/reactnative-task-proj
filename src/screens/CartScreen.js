@@ -44,7 +44,7 @@ export default function CartScreen() {
       </View>
 
       <TouchableOpacity
-        testID={`cart_item_delete_${index + 1}`}
+        testID={`cart_item_delete_${item.id.match(/\d+$/)?.[0]}`}
         onPress={() => handleDelete(item.id)}
         style={styles.deleteBtn}
         accessibilityLabel={`cart_item_delete_${index + 1}`}

@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppContext } from '../context/AppContext';
 import ProductCard from '../components/ProductCard';
 
-//  20 static products
+// 20 static products
 const BASE_PRODUCTS = Array.from({ length: 20 }).map((_, i) => ({
   id: `prod-${i + 1}`,
   title: `Product ${i + 1}`,
@@ -24,7 +24,6 @@ export default function HomeScreen() {
   );
 
   const loadMore = () => {
-    // Loop through the same 20 items; give unique ids per "page"
     const nextPage = page + 1;
     const nextChunk = BASE_PRODUCTS.map((p, idx) => ({
       ...p,
@@ -34,13 +33,24 @@ export default function HomeScreen() {
     setPage(nextPage);
   };
 
+  // 🧩 Each item now gets a unique testID for Maestro targeting
   const renderItem = ({ item, index }) => (
-    <ProductCard language={language} item={item} index={index} />
+    <View
+      testID={`product_item_${index + 1}`}
+      accessible={true}
+      accessibilityLabel={`product_item_${index + 1}`}
+      style={styles.itemWrapper}
+    >
+      <ProductCard
+        language={language}
+        item={item}
+        index={index}
+        testID={`product_${index + 1}_add_button`} // optional if ProductCard uses this
+      />
+    </View>
   );
 
   const keyExtractor = useMemo(() => item => item.id, []);
-
-  console.log('HomeScreen Rendered', { cartItems, language });
 
   return (
     <SafeAreaView style={styles.safe} testID="home_screen">
@@ -72,4 +82,5 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   content: { padding: 12 },
   row: { justifyContent: 'space-between' },
+  itemWrapper: { flex: 1, marginBottom: 12 },
 });

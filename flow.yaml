@@ -1,0 +1,18 @@
+appId: com.task # replace with your app id
+---
+- launchApp
+
+# Step 1: On Home page, tap 4th visible product
+- tapOn:
+    id: 'product_item_4'
+
+# Step 2: Go to Cart
+- tapOn:
+    id: 'cart_icon'
+
+# Step 3: Delete the item from Cart
+- tapOn:
+    id: 'cart_item_delete_4'
+
+- tapOn:
+    id: 'back_button'
