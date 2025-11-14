@@ -1,97 +1,83 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+🛒 React Native Task – Home & Cart Flow (with Persistence + Maestro E2E)
 
-# Getting Started
+This project demonstrates a simple two-screen shopping flow built using React Native, including cart management, language switching, local persistence, and automated E2E testing.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+✨ Features
+Home Screen
 
-## Step 1: Start Metro
+Centered title: Home
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+Right-side icons: Cart (with item count) and Settings
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+Language selection modal (English & Arabic)
 
-```sh
-# Using npm
-npm start
+20 static products displayed in two columns
 
-# OR using Yarn
-yarn start
-```
+Infinite scrolling FlatList
 
-## Step 2: Build and run your app
+Each card has Add to Cart / Added button
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+Updates cart count dynamically
 
-### Android
+Cart Screen
 
-```sh
-# Using npm
-npm run android
+Shows all items added from Home
 
-# OR using Yarn
-yarn android
-```
+Each item has a delete button
 
-### iOS
+Cart count updates on deletion
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+Full RTL support for Arabic
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+Data Persistence
 
-```sh
-bundle install
-```
+All user data persists even after killing the app:
 
-Then, and every time you update your native dependencies, run:
+Cart items
 
-```sh
-bundle exec pod install
-```
+Cart count
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+Selected language
 
-```sh
-# Using npm
-npm run ios
+Handled through AsyncStorage + global Context API.
 
-# OR using Yarn
-yarn ios
-```
+Maestro E2E Test
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+A complete end-to-end test is included:
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+maestro/flow/cart_flow.yaml
 
-## Step 3: Modify your app
+Covers:
 
-Now that you have successfully run the app, let's make changes!
+Add the 4th visible item to the cart
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+Navigate to Cart
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+Delete the item
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+Return to Home
 
-## Congratulations! :tada:
+📂 Main Folder Structure
+src/
+components/
+screens/
+context/
+utils/
+data/
+storage/
+navigation/
+maestro/
 
-You've successfully run and modified your React Native App. :partying_face:
+▶️ Run the App
+npm install
+npx react-native run-android
 
-### Now what?
+# or
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+npx react-native run-ios
 
-# Troubleshooting
+🤖 Run Maestro E2E Test
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+Start a simulator/emulator, then:
 
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+maestro test flow.yaml
