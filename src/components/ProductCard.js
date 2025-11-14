@@ -9,16 +9,13 @@ export default function ProductCard({ item, index }) {
 
   const handleToggle = () => {
     // Only allow adding/removing the 4th item (index === 3)
-    if (index === 3) {
-      if (isAdded) {
-        dispatch({ type: 'REMOVE_FROM_CART', payload: item.id });
-      } else {
-        dispatch({ type: 'ADD_TO_CART', payload: item });
-      }
+
+    if (isAdded) {
+      dispatch({ type: 'REMOVE_FROM_CART', payload: item.id });
+    } else {
+      dispatch({ type: 'ADD_TO_CART', payload: item });
     }
   };
-
-  const isAllowed = index === 3;
 
   return (
     <View style={styles.card}>
@@ -28,19 +25,15 @@ export default function ProductCard({ item, index }) {
       <TouchableOpacity
         testID={`product_${index + 1}_add_button`}
         onPress={handleToggle}
-        disabled={!isAllowed}
+        // disabled={!isAllowed}
         style={[
           styles.button,
           isAdded && styles.added,
-          !isAllowed && styles.disabled,
+          // !isAllowed && styles.disabled,
         ]}
       >
         <Text style={styles.buttonText}>
-          {isAdded
-            ? t(state.language, 'added')
-            : isAllowed
-            ? t(state.language, 'add')
-            : t(state.language, 'add')}{' '}
+          {isAdded ? t(state.language, 'added') : t(state.language, 'add')}
         </Text>
       </TouchableOpacity>
     </View>
